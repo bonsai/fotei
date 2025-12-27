@@ -1,0 +1,30 @@
+# Virtual Environments
+venv/
+venv_volume/
+.venv/
+
+# Credentials & Tokens
+credentials.json
+token*.pickle
+client_secret*.json
+
+# Logs & Temporary Files
+*.log
+move_plan_log.txt
+tmp/
+
+# OS Files
+Thumbs.db
+.DS_Store
+
+# User-specific dev files
+@dev/
+@dev*
+
+# Media cache/temp folders
+JPG/
+jpg/
+
+# Year folders
+2024/
+2025/

@@ -2,29 +2,37 @@
 venv/
 venv_volume/
 .venv/
+__pycache__/
+*.py[cod]
+*.class
 
-# Credentials & Tokens
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Credentials & Tokens       
 credentials.json
 token*.pickle
 client_secret*.json
 
-# Logs & Temporary Files
+# Logs & Temporary Files     
 *.log
 move_plan_log.txt
 tmp/
+temp/
 
 # OS Files
 Thumbs.db
 .DS_Store
+.vscode/
+.idea/
 
-# User-specific dev files
+# User-specific dev files    
 @dev/
 @dev*
+want.txt
 
-# Media cache/temp folders
+# Media / Data folders (Git ignore large data)
 JPG/
 jpg/
-
-# Year folders
 2024/
 2025/
