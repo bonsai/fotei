@@ -1,0 +1,108 @@
+# .coderabbit.yaml
+# CodeRabbit AI Code Reviewer Configuration for FOTEI
+
+# Language settings
+language: ja
+
+# Review settings
+reviews:
+  # 自動レビューを有効化
+  auto_review: true
+  
+  # レビュー対象ファイル
+  path_filters:
+    - "FOTEI/**/*.py"
+    - "FOTEI/**/*.ps1"
+    - "FOTEI/**/*.ipynb"
+  
+  # レビュー時にチェックする項目
+  review_aspects:
+    - security          # セキュリティ問題
+    - performance       # パフォーマンス
+    - best_practices    # ベストプラクティス
+    - code_style        # コードスタイル
+    - error_handling    # エラーハンドリング
+    - documentation     # ドキュメント
+
+  # 重要度フィルタ（低い問題は表示しない）
+  min_severity: "info"
+
+# FOTEI専用のカスタムルール
+custom_rules:
+  # Phase 1-2: ローカル処理
+  - name: "file_operation_safety"
+    description: "ファイル操作の安全性チェック"
+    pattern: "(Move-Item|Remove-Item|os\\.remove|shutil\\.)"
+    message: "ファイル操作にエラーハンドリングとバックアップ処理を追加してください"
+    severity: "warning"
+  
+  # Phase 3-4: クラウド連携
+  - name: "api_credential_check"
+    description: "API認証情報のハードコーディングチェック"
+    pattern: "(api[_-]?key|token|password|secret)\\s*=\\s*['\"]\\w+"
+    message: "認証情報がハードコードされています。環境変数または pickle ファイルを使用してください"
+    severity: "error"
+  
+  - name: "rate_limit_handling"
+    description: "API レート制限の考慮"
+    pattern: "(mediaItems\\(\\)|files\\(\\)\\.create)"
+    message: "APIレート制限に注意してください。リトライロジックの追加を検討してください"
+    severity: "info"
+
+# コメント設定
+comments:
+  # インラインコメントを有効化
+  inline_comments: true
+  
+  # サマリーコメントを有効化
+  summary_comment: true
+  
+  # 絵文字を使用
+  use_emojis: true
+
+# 自動修正の提案
+auto_fix:
+  enabled: true
+  
+  # 自動修正可能な項目
+  auto_fixable:
+    - formatting
+    - imports
+    - simple_refactoring
+
+# 除外設定
+ignore:
+  paths:
+    - "**/*.md"
+    - "**/*.txt"
+    - "**/*.json"
+    - "**/venv/**"
+    - "**/venv_volume/**"
+    - "**/__pycache__/**"
+    - "**/*.pyc"
+
+# プロジェクト固有のコンテキスト
+project_context:
+  description: |
+    FOTEI: Hybrid Cloud Media Pipeline
+    
+    フェーズ構成:
+    - Phase 1-2: ローカルでのファイル整理・圧縮（Windows PowerShell/Python）
+    - Phase 3-4: クラウド同期とAI解析（Google Photos/Drive/Colab）
+    
+    重点チェック項目:
+    - ファイル操作の安全性（上書き・削除）
+    - API認証情報の管理
+    - クロスプラットフォーム互換性
+    - エラーハンドリングの網羅性
+
+# 通知設定
+notifications:
+  # PR作成時に自動レビュー
+  on_pr_open: true
+  
+  # コミット追加時に再レビュー
+  on_pr_update: true
+  
+  # 重大な問題発見時に通知
+  on_critical_issues: true
